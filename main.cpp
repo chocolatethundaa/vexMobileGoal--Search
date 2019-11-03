@@ -1,83 +1,59 @@
 #include<conio.h>
 #include <iostream>
 #include <string>
+#include "mbgoal.h"
+#include <map>
+#include <vector>
 using namespace std;
 
 
-class MBGoal {
-    int posX, posY;
-    string name;
-    bool isScored;
-    public:
 
-    //MBGoal(string, int, int);
-
-    void setXY (int x, int y){
-        posX = x;
-        posY = y;
-    }
-    int getPosX () { return posX;}
-    int getPosY () { return posY;}
-    void changeName(string x){
-        name = x;
-    }
-    string getName(){
-
-        return name;
-    }
-
-
-
-
-
-};
-///constructor
-/*MBGoal:: MBGoal (string label,int a,int b){
-name =  label;
-   posX = a;
-   posY = b;
-
-}
-*/
 int main(){
 
- MBGoal *MBG;
-
+ vector <MBGoal> MBGList;
+ map<string, MBGoal> mbg;
    int numMB;
  //  clrscr();
      cout<<"How many mobile Goals will there be?"<< endl;
      cin >> numMB;
-  MBG = new MBGoal[numMB];
+ // MBG = new MBGoal[numMB];
 
 
      for (int i=0; i < numMB; i++){
          //MBGoal a ("null", 0,0)
          string name;
-         int positionX;
-         int positionY;
+         int x;
+         int y ;
+         int neighbors;
          cout<<"Name of mobile goal #"<<(i+1)<<" : ";
          cin>>name;
-         MBG[i].changeName(name);
-         cout << "Starting x position of "<< MBG[i].getName()<< " : ";
-         cin>> positionX;
-         cout << "Starting y position of "<< MBG[i].getName()<< " : ";
-         cin>> positionY;
+         cout<<endl;
+         cout << "Starting x position of "<< name << " : ";
+         cin>> x;
+         cout<<endl;
+         cout << "Starting y position of "<< name<< " : ";
+         cin>> y;
+         cout<<endl;
+         cout << "Number of neighbors for  "<<name << " : ";
+         cin>> neighbors;
+         cout<<endl;
+         MBGoal *MBG = (MBGoal *)make_MBG(x,y,name,neighbors);
+         MBGList.push_back(*MBG);
+         mbg.insert(pair<string,MBGoal>(name,*MBG));
+//
+     }
 
-         MBG[i].setXY(positionX,positionY);
-
+     for(int i=0;i<MBGList.size(); i++){
+         printInfo(&MBGList[i]);
+       
      }
 
 
-   
 
 
-    /*MBGoal mb1 ("mb1", 20 ,40);
 
-    ptr = &mb1;
 
-    cout << "Current position of "<< ptr->getName()<< " is "  << ptr->getPosX()<< ", " << ptr->getPosX()<< endl;
-   
-   */ return 0;
+   return 0;
 }
 
 
