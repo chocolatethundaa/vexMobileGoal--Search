@@ -2,6 +2,18 @@
 #include <vector>
 
 
+
+MBGoal:: MBGoal (string name, int posX, int posY){
+
+
+    cout<< "Constructor with 3 parameters is being used"<< endl;
+
+    this->name = name;
+    this->posX = posX;
+    this->posY = posY;
+
+    isScored = false;
+}
 /*MBGoal::MBGoal initializeMB( int x, int y, string name, int nBors){
 
 current->setXY(x,y);
@@ -16,7 +28,7 @@ for(int i =0; i<nBors;i++){
 }
 */
 
-void * make_MBG(int x, int y, string name, int nBors){
+/*void * make_MBG(int x, int y, string name, int nBors){
 
     MBGoal *MBG;
     MBG = new MBGoal;
@@ -33,7 +45,7 @@ for(int i =0; i<nBors;i++){
 return MBG;
 }
 
-
+*/
 
 void MBGoal::setXY (int x, int y){
 
@@ -73,6 +85,13 @@ void printInfo(MBGoal *current){
     cout<<"Name: "<<current->getName()<<endl;
     cout<<"Position: ("<<current->getPosX()<<", "<<current->getPosY()<< ")"<<endl;
     cout<<"Scored?: "<<current->getisScored()<<endl;
-    cout<<"Number of neighbors: "<<current->neighbors.size()<< endl;
+  //  cout<<"Number of neighbors: "<<current->neighbors.size()<< endl;
 
+}
+
+float dist_btw_MBGs(MBGoal *current, MBGoal * current1){
+
+
+
+    return sqrt( pow(current->getPosX()-current1->getPosX(), 2)+ pow(current->getPosY()-current1->getPosY(), 2));
 }
