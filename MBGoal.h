@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include "math.h"
+#include <map>
 
 using namespace std;
 
@@ -16,10 +17,11 @@ class MBGoal {
     int posX, posY;
     string name;
     bool isScored;
+    
 
     public:
-    MBGoal(string, int, int);
-   
+    //MBGoal();
+   map<string, MBGoal*> neighbors;
     void setXY (int x, int y);
     void setScored(bool x);
     int getPosX (); 
@@ -27,9 +29,10 @@ class MBGoal {
     void setName(string n);
     string getName();
     bool getisScored();
+    void setNeighbor(string name, MBGoal *current, map<string, MBGoal*> neighbor);
+    bool checkIfNeighbor(MBGoal *current);
 
-   // vector <MBGoal*> neighbors;
-
+   
 
 
 };
@@ -41,5 +44,6 @@ class MBGoal {
 void deleteMB(MBGoal current);
 void printInfo(MBGoal *current);
 float dist_btw_MBGs(MBGoal *current, MBGoal * current1);
+
 
 #endif

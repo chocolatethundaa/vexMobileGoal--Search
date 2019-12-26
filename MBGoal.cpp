@@ -1,9 +1,9 @@
 #include "mbgoal.h"
 #include <vector>
+#include <iterator>
 
 
-
-MBGoal:: MBGoal (string name, int posX, int posY){
+/*MBGoal:: MBGoal (string name, int posX, int posY){
 
 
     cout<< "Constructor with 3 parameters is being used"<< endl;
@@ -13,7 +13,7 @@ MBGoal:: MBGoal (string name, int posX, int posY){
     this->posY = posY;
 
     isScored = false;
-}
+}*/
 /*MBGoal::MBGoal initializeMB( int x, int y, string name, int nBors){
 
 current->setXY(x,y);
@@ -44,9 +44,21 @@ for(int i =0; i<nBors;i++){
 
 return MBG;
 }
-
 */
 
+void MBGoal :: setNeighbor(string name, MBGoal *current,map<string, MBGoal*> neighbor){
+
+map<string, MBGoal*> :: iterator it = neighbor.begin();
+    while(it!= neighbor.end()){
+        if(current->neighbors.count(it->first)<1){
+            current->neighbors.insert(pair<string,MBGoal*>(it->first,it->second));
+           it->second->neighbors.insert(pair<string,MBGoal*>(name,current));
+           
+        }
+        it++;
+    }
+
+}
 void MBGoal::setXY (int x, int y){
 
     posX = x;
@@ -80,11 +92,16 @@ bool MBGoal::getisScored(){
     return isScored;
 }
 
-void printInfo(MBGoal *current){
+void printInfo(MBGoal*current){
 
+map<string, MBGoal*> :: iterator it = current->neighbors.begin();
     cout<<"Name: "<<current->getName()<<endl;
     cout<<"Position: ("<<current->getPosX()<<", "<<current->getPosY()<< ")"<<endl;
     cout<<"Scored?: "<<current->getisScored()<<endl;
+    while(it!= current->neighbors.end()){
+        cout<<"Neighbors are: "<<it->first<< endl;
+        it++;
+    }
   //  cout<<"Number of neighbors: "<<current->neighbors.size()<< endl;
 
 }
