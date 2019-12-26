@@ -11,59 +11,47 @@
 //#include <winbgim.h>
 using namespace std;
 
-
+//global stctures and variables
 vector <MBGoal*> MBGList;
- map<string, MBGoal*> mbg;
+map<string, MBGoal*> mbg;
 
+
+
+
+//creating map for neighbors to add to each MBS
 map<string, MBGoal*> initMap (string line)
 {
 
-  
    char split_char = ' ';
-
-   // work
    istringstream split(line);
    vector<string> tokens;
    for (string each;getline(split, each, split_char); tokens.push_back(each));
-
-   for(int i =0;i<tokens.size();i++){
+   /*for(int i =0;i<tokens.size();i++){
      cout<<tokens[i]<<endl;
-        }
-
-
-map<string, MBGoal*> N;
-for(int i =0; i<tokens.size(); i++){
-
-    
-
+        }*/
+  map<string, MBGoal*> N;
+  for(int i =0; i<tokens.size(); i++){
       if(mbg.count(tokens[i])==1){
-        
         N.insert(pair<string,MBGoal*>(tokens[i],mbg.at(tokens[i])));
       }
-
-    
-
-
 }
-
 return N;
 }
 
+
+
+
+
+
 int main(){
 
-
-
  cout<<"The current field is flat and has the dimensions of 100m by 100m"<< endl;
- 
- 
-   int numMB;
 
+   int numMB;
      cout<<"How many mobile Goals will there be?"<< endl;
      cin >> numMB;
- 
 
 //setup mbgfield
-
      for (int i=0; i < numMB; i++){
          string name;
          int x;
@@ -82,13 +70,10 @@ int main(){
          MB =  new MBGoal();
          MB->setName(name);
          MB->setXY(x,y);
-    
          
         MBGList.push_back(MB);
         mbg.insert(pair<string,MBGoal*>(name,MBGList[i]));
          
- 
-
      }
 
      //setNeighbors
@@ -101,37 +86,28 @@ int main(){
         cin>> currentMB;
         cin.ignore();
     map<string, MBGoal*> Neighbors;
-   // vector<string> keyNBors;
         getline(cin,setMB);
          cout<<"inputed" <<endl;
-        // cout<<setMB<<endl;
+
         Neighbors = initMap(setMB);
          cout<<"completed initmap"<<endl;
-       /* map<string, MBGoal*> :: iterator it = Neighbors.begin();
-         while(it!= Neighbors.end()){
-        cout<<"Neighbors are: "<<it->first<< " "<<it->second->getPosX()<< endl;
-        it++;
-    }*/
 
 
         mbg.at(currentMB)->setNeighbor(currentMB,mbg.at(currentMB), Neighbors);
 
         cout<<"completed setneighbors"<<endl;
-        printInfo(MBGList[0]);
-
         cout<< "Finished?" <<endl;
         cin>>finished;
     }
 
 
-
-
     for(int i=0;i<MBGList.size(); i++){
-
          printInfo(MBGList[i]);
-        
-       
+          findNearestMBG(MBGList[i]) ;  
      }
+
+
+
 string answer1;
 string answer2;
 string done;

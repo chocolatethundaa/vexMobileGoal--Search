@@ -1,6 +1,7 @@
 #include "mbgoal.h"
 #include <vector>
 #include <iterator>
+#include "float.h"
 
 
 /*MBGoal:: MBGoal (string name, int posX, int posY){
@@ -106,9 +107,25 @@ map<string, MBGoal*> :: iterator it = current->neighbors.begin();
 
 }
 
+void findNearestMBG (MBGoal *current){
+map<string, MBGoal*> :: iterator it = current->neighbors.begin();
+
+double minDis = DBL_MAX;
+string name;
+    while(it!= current->neighbors.end()){
+        double dis =dist_btw_MBGs(current, it->second);
+
+        if(minDis>dis){ 
+            minDis= dis; 
+            name = it->first;
+            }
+            it++;
+    }
+
+    cout<< "Closest MB is "<< name <<endl;
+    cout<< "With a distance of "<< minDis<<endl; 
+}
 float dist_btw_MBGs(MBGoal *current, MBGoal * current1){
-
-
 
     return sqrt( pow(current->getPosX()-current1->getPosX(), 2)+ pow(current->getPosY()-current1->getPosY(), 2));
 }
