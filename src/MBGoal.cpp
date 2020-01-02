@@ -8,7 +8,7 @@
 
 void MBGoal :: setNeighbor(string name, MBGoal *current,map<string, MBGoal*> neighbor){
 
-map<string, MBGoal*> :: iterator it = neighbor.begin();
+     auto it = neighbor.begin();
     while(it!= neighbor.end()){
         if(current->neighbors.count(it->first)<1){
             current->neighbors.insert(pair<string,MBGoal*>(it->first,it->second));
@@ -54,20 +54,29 @@ bool MBGoal::getisScored(){
 
 void printInfo(MBGoal*current){
 
-map<string, MBGoal*> :: iterator it = current->neighbors.begin();
+   
     cout<<"Name: "<<current->getName()<<endl;
     cout<<"Position: ("<<current->getPosX()<<", "<<current->getPosY()<< ")"<<endl;
     cout<<"Scored?: "<<current->getisScored()<<endl;
+    cout<<"Neighbors are: ";
+    if(current->neighbors.size()==0){
+        cout<<current->getName()<<" currently doesn't have any neighbors"<<endl;
+    }
+    else{
+auto it = current->neighbors.begin();
     while(it!= current->neighbors.end()){
-        cout<<"Neighbors are: "<<it->first<< endl;
+        cout<<it->first<<" ";
         it++;
     }
+    cout<<endl;
+    }
+     
   //  cout<<"Number of neighbors: "<<current->neighbors.size()<< endl;
 
 }
 
 void findNearestMBG (MBGoal *current){
-map<string, MBGoal*> :: iterator it = current->neighbors.begin();
+auto it = current->neighbors.begin();
 
 double minDis = DBL_MAX;
 string name;
@@ -89,9 +98,7 @@ float dist_btw_MBGs(MBGoal *current, MBGoal * current1){
     return sqrt( pow(current->getPosX()-current1->getPosX(), 2)+ pow(current->getPosY()-current1->getPosY(), 2));
 }
 
-void updateMBGoal(MBGoal *current){
-
-
+void updateMBGoal(string name, MBGoal *current){
 
 int ans = 9;
 
@@ -119,10 +126,33 @@ cin>>ans;
        
        case 2:
        {
-           int space;
-        cout<< "New capacity size : ";
-        cin>>space;
-       // current->setMax(space);
+           cout<<"Currently here are the neighbors for this mobile goal: "<<endl;
+            auto it = current->neighbors.begin();//create iterator to in mbgoal's map of neighbors
+            while(it!= current->neighbors.end()){//go through till the end 
+                cout<<it->first<<" ";//print out the name of mbgoals(the neighbors)
+                it++;
+                }
+            cout<<endl;
+            cin.ignore();
+            it = current->neighbors.begin();//reset iterator to start of map of neighbors
+            while(it!= current->neighbors.end()){//go through till the end again
+                auto iter = it->second->neighbors.find(name);//for each neighbor make another iterator that finds current mbgoal
+                if (iter != it->second->neighbors.end()){//if found beforre it reaches end 
+                      it->second->neighbors.erase(iter);//delete it from the map of neigbors of the the current mbgoals neighbor
+                        cout<<" Found "<< iter->first<< " inside of "<<it->first<< " neigbors map"<< endl;
+                }
+               
+                current->neighbors.erase(it->first);
+                cout<< "erased"<<endl;
+                
+                it++;
+                }
+            cout<<endl;
+
+
+            cout<<"The size of neigbors map of current mbgoal is" << current->neighbors.size()<<endl;;
+            //string line;
+            //getline(cin,line);
 
        }
        break;

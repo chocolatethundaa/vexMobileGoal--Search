@@ -40,7 +40,7 @@ return N;
 }
 
 void findClosestMBG (Robot *current){
-map<string, MBGoal*> :: iterator it = mbg.begin();
+auto it = mbg.begin();
 
 double minDis = DBL_MAX;
 string name = "";
@@ -77,6 +77,8 @@ int main(){
 
 
  cout<<"The current field is flat and has the dimensions of 100m by 100m"<< endl;
+
+string preset;
 
    int num;
      cout<<"How many mobile Goals will there be?"<< endl;
@@ -174,7 +176,7 @@ int main(){
           cout<<endl;
      }
 
-        map<string, Robot*> :: iterator it = rob.begin();
+        auto it = rob.begin();
 
         while(it!= rob.end()){
        
@@ -210,15 +212,19 @@ switch (switch1){
       cout<< "Which mobile goal would you like to update"<< endl;
       cin>>name;
 
-      updateMBGoal(mbg.at(name));
+      updateMBGoal(name, mbg.at(name));
+      cout<< "mbg map size is "<< mbg.size()<<endl;
       newName = mbg.at(name)->getName();
       mbg.insert(pair<string,MBGoal*>(newName,mbg.at(name)));
+       cout<< "mbg map size is "<< mbg.size()<<endl;
       mbg.erase(name);
+      cout<< "mbg map size is "<< mbg.size()<<endl;
 
+      cout<<"gets to erase"<< endl;
      // name = mbg.at(name)->getName();
 
       printInfo(mbg.at(newName));
-
+cout<<"gets to erase"<< endl;
   }
     break;
 
@@ -287,13 +293,13 @@ switch (switch1){
 }
 
 
- for (vector<MBGoal*>::iterator pObj = MBGList.begin();
+ for (auto pObj = MBGList.begin();
         pObj != MBGList.end(); ++pObj) {
       delete *pObj; // Note that this is deleting what pObj points to,
                     // which is a pointer
    }
 
-for (vector<Robot*>::iterator pObj = BotList.begin();
+for (auto pObj = BotList.begin();
         pObj != BotList.end(); ++pObj) {
       delete *pObj; // Note that this is deleting what pObj points to,
                     // which is a pointer

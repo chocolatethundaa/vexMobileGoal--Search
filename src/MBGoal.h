@@ -46,7 +46,7 @@ void deleteMB(MBGoal current);
 void printInfo(MBGoal *current);
 void findNearestMBG (MBGoal *current);
 float dist_btw_MBGs(MBGoal *current, MBGoal * current1);
-void updateMBGoal(MBGoal *current);
+void updateMBGoal(string name, MBGoal *current);
 
 
 #endif
