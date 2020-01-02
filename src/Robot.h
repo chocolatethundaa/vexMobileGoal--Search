@@ -45,5 +45,5 @@ void deleteRob(Robot current);
 void printRoboInfo(Robot *current);
 float dist_Rob_MBG(Robot *current, MBGoal *current1);
 void updateRobot(Robot *current);
->>>>>>> e5aae5aec5883a3b13295fede016bab26b33bc48
+
 #endif
