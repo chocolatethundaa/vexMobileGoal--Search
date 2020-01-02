@@ -1,3 +1,4 @@
+
  #ifndef MBGOAL_H
 #define MBGOAL_H
 #include <stdbool.h>
@@ -47,4 +48,5 @@ void findNearestMBG (MBGoal *current);
 float dist_btw_MBGs(MBGoal *current, MBGoal * current1);
 void updateMBGoal(MBGoal *current);
 
+>>>>>>> e5aae5aec5883a3b13295fede016bab26b33bc48
 #endif

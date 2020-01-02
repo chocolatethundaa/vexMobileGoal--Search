@@ -1,3 +1,4 @@
+
 #include "mbgoal.h"
 #include <vector>
 #include <iterator>
@@ -16,7 +17,6 @@ map<string, MBGoal*> :: iterator it = neighbor.begin();
         }
         it++;
     }
-//added new text
 
 }
 void MBGoal::setXY (int x, int y){
@@ -141,4 +141,5 @@ cin>>ans;
 
 
 
+>>>>>>> e5aae5aec5883a3b13295fede016bab26b33bc48
 }
