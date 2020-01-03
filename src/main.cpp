@@ -8,6 +8,7 @@
 #include "Robot.h"
 #include <sstream>
 #include "float.h"
+#include "time.h"
 using namespace std;
 
 //global stctures and variables
@@ -20,8 +21,7 @@ map<string, Robot*> rob;
 
 
 //creating map for neighbors to add to each MBS
-map<string, MBGoal*> initMap (string line)
-{
+map<string, MBGoal*> initMap (string line){
 
    char split_char = ' ';
    istringstream split(line);
@@ -35,15 +35,15 @@ map<string, MBGoal*> initMap (string line)
       if(mbg.count(tokens[i])==1){
         N.insert(pair<string,MBGoal*>(tokens[i],mbg.at(tokens[i])));
       }
-}
-return N;
+  }
+  return N;
 }
 
 void findClosestMBG (Robot *current){
-auto it = mbg.begin();
+  auto it = mbg.begin();
 
-double minDis = DBL_MAX;
-string name = "";
+  double minDis = DBL_MAX;
+  string name = "";
    
     while(it!= mbg.end()){
 
@@ -74,17 +74,54 @@ string name = "";
 
 int main(){
 
-
-
- cout<<"The current field is flat and has the dimensions of 100m by 100m"<< endl;
+cout<<"The current field is flat and has the dimensions of 100 meters by 100 meters"<< endl;
 
 string preset;
 
-   int num;
+cout<< "Would you like to use a preset field"<< endl;
+
+cin>>preset;
+
+if(preset == "yes"){
+string mb1 = "mb1";
+string mb2 = "mb2";
+string mb3 = "mb3";
+string vexRobot = "vexRobot";
+string array[3] = {mb1,mb2,mb3};
+srand(time(NULL));
+for(int i = 0; i<3; i++){
+    MBGoal *MB;
+    MB =  new MBGoal();
+    MB->setName(array[i]);
+    MB->setXY(rand() % 100,rand() % 100);
+         
+    MBGList.push_back(MB);
+    mbg.insert(pair<string,MBGoal*>(array[i],MBGList[i]));
+}
+
+mbg.at(mb1)->neighbors.insert(pair<string,MBGoal*>(mb2,mbg.at(mb2)));
+mbg.at(mb1)->neighbors.insert(pair<string,MBGoal*>(mb3,mbg.at(mb3)));
+mbg.at(mb2)->neighbors.insert(pair<string,MBGoal*>(mb1,mbg.at(mb1)));
+mbg.at(mb3)->neighbors.insert(pair<string,MBGoal*>(mb1,mbg.at(mb1)));
+
+  Robot *Bot;
+  Bot =  new Robot();
+  Bot->setName(vexRobot);
+  Bot->setXY(rand() % 100,rand() % 100);
+  Bot->setSpeed((double)(rand()%15 + 1));
+  Bot->setMax(rand() % 2 +1);
+         
+  BotList.push_back(Bot);
+  rob.insert(pair<string,Robot*>(vexRobot,BotList[0]));
+
+}
+//user input for setting up custom field
+else{
+      int num;
      cout<<"How many mobile Goals will there be?"<< endl;
      cin >> num;
 
-//setup mbgfield
+      //setup mbgfield
      for (int i=0; i < num; i++){
          string name;
          int x,y;
@@ -118,12 +155,10 @@ string preset;
         cout << "Setting neighbors for: ";
         cin>> currentMB;
         cin.ignore();
-    map<string, MBGoal*> Neighbors;
+        map<string, MBGoal*> Neighbors;
         getline(cin,setMB);
-        // cout<<"inputed" <<endl;
 
         Neighbors = initMap(setMB);
-         //cout<<"completed initmap"<<endl;
 
 
         mbg.at(currentMB)->setNeighbor(currentMB,mbg.at(currentMB), Neighbors);
@@ -131,11 +166,11 @@ string preset;
         cout<<"completed setneighbors"<<endl;
         cout<< "Finished?" <<endl;
         cin>>finished;
-    }
+        }
 
 
-     cout<<"How many Robots will there be?"<< endl;
-     cin >> num;
+        cout<<"How many Robots will there be?"<< endl;
+          cin >> num;
 
           for (int i=0; i < num; i++){
          string name;
@@ -169,6 +204,9 @@ string preset;
          
      }
 
+}
+   
+//printing out field items
     for(int i=0;i<MBGList.size(); i++){
          printInfo(MBGList[i]);
          cout<<endl;
@@ -213,18 +251,12 @@ switch (switch1){
       cin>>name;
 
       updateMBGoal(name, mbg.at(name));
-      cout<< "mbg map size is "<< mbg.size()<<endl;
       newName = mbg.at(name)->getName();
-      mbg.insert(pair<string,MBGoal*>(newName,mbg.at(name)));
-       cout<< "mbg map size is "<< mbg.size()<<endl;
+      auto upMBGoal = mbg.at(name);
       mbg.erase(name);
-      cout<< "mbg map size is "<< mbg.size()<<endl;
-
-      cout<<"gets to erase"<< endl;
-     // name = mbg.at(name)->getName();
+      mbg.insert(pair<string,MBGoal*>(newName,upMBGoal));
 
       printInfo(mbg.at(newName));
-cout<<"gets to erase"<< endl;
   }
     break;
 
@@ -238,8 +270,10 @@ cout<<"gets to erase"<< endl;
 
       updateRobot(rob.at(name));
       newName = rob.at(name)->getName();
-      rob.insert(pair<string,Robot*>(newName,rob.at(name)));
+      auto upRob = rob.at(name);
       rob.erase(name);
+      rob.insert(pair<string,Robot*>(newName,upRob));
+      
 
       
 
