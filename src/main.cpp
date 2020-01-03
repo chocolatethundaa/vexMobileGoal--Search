@@ -38,7 +38,7 @@ map<string, MBGoal*> initMap (string line){
   }
   return N;
 }
-
+//function that finds the closest mbgoal to a robot **WILL NEED TO BE ALTERED WHEN GRAPH IS IMPLEMENTED
 void findClosestMBG (Robot *current){
   auto it = mbg.begin();
 
@@ -76,20 +76,18 @@ int main(){
 
 cout<<"The current field is flat and has the dimensions of 100 meters by 100 meters"<< endl;
 
+//setting a preset
 string preset;
-
 cout<< "Would you like to use a preset field"<< endl;
-
 cin>>preset;
-
 if(preset == "yes"){
-string mb1 = "mb1";
-string mb2 = "mb2";
-string mb3 = "mb3";
-string vexRobot = "vexRobot";
-string array[3] = {mb1,mb2,mb3};
-srand(time(NULL));
-for(int i = 0; i<3; i++){
+  string mb1 = "mb1";
+  string mb2 = "mb2";
+  string mb3 = "mb3";
+  string vexRobot = "vexRobot";
+  string array[3] = {mb1,mb2,mb3};
+  srand(time(NULL));
+  for(int i = 0; i<3; i++){
     MBGoal *MB;
     MB =  new MBGoal();
     MB->setName(array[i]);
@@ -97,12 +95,12 @@ for(int i = 0; i<3; i++){
          
     MBGList.push_back(MB);
     mbg.insert(pair<string,MBGoal*>(array[i],MBGList[i]));
-}
+  }
 
-mbg.at(mb1)->neighbors.insert(pair<string,MBGoal*>(mb2,mbg.at(mb2)));
-mbg.at(mb1)->neighbors.insert(pair<string,MBGoal*>(mb3,mbg.at(mb3)));
-mbg.at(mb2)->neighbors.insert(pair<string,MBGoal*>(mb1,mbg.at(mb1)));
-mbg.at(mb3)->neighbors.insert(pair<string,MBGoal*>(mb1,mbg.at(mb1)));
+  mbg.at(mb1)->neighbors.insert(pair<string,MBGoal*>(mb2,mbg.at(mb2)));
+  mbg.at(mb1)->neighbors.insert(pair<string,MBGoal*>(mb3,mbg.at(mb3)));
+  mbg.at(mb2)->neighbors.insert(pair<string,MBGoal*>(mb1,mbg.at(mb1)));
+  mbg.at(mb3)->neighbors.insert(pair<string,MBGoal*>(mb1,mbg.at(mb1)));
 
   Robot *Bot;
   Bot =  new Robot();
@@ -207,7 +205,7 @@ else{
 }
    
 //printing out field items
-    for(int i=0;i<MBGList.size(); i++){
+for(int i=0;i<MBGList.size(); i++){
          printInfo(MBGList[i]);
          cout<<endl;
           findNearestMBG(MBGList[i]) ;  
@@ -222,11 +220,11 @@ else{
             cout<<endl;
   
             it++;
-    }   
+}   
 
 
 
-
+//switch statements to alter field or find different measurements
 int switch1=8;
 
 while(switch1!= 0){
@@ -242,7 +240,7 @@ cin>>switch1;
 
 
 switch (switch1){
-
+  //update a specific mbgoal
   case 1:
   {
       string name;
@@ -260,7 +258,7 @@ switch (switch1){
   }
     break;
 
-  
+  //update a specific robot
   case 2:
   {
       string name;
@@ -283,7 +281,7 @@ switch (switch1){
   }
     break;
 
-  
+  //find distance between mbgoals
   case 3:
   {
       string mb1;
@@ -297,7 +295,7 @@ switch (switch1){
       cout << "The distance is: "<<dist_btw_MBGs(mbg.at(mb1),mbg.at(mb2))<<endl;
   }
     break;
-
+  //find distance between a robot and a mbgoal
   case 4:
   {
       string rob1;

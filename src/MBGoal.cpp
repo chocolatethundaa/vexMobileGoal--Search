@@ -3,6 +3,7 @@
 #include <vector>
 #include <iterator>
 #include "float.h"
+#include <sstream>
 
 
 
@@ -150,9 +151,22 @@ cin>>ans;
             cout<<endl;
 
 
-            cout<<"The size of neigbors map of current mbgoal is" << current->neighbors.size()<<endl;;
-            //string line;
-            //getline(cin,line);
+            cout<<"The size of neigbors map of current mbgoal is" << current->neighbors.size()<<endl;
+            string line;
+            cin.ignore();
+            getline(cin,line);
+            char split_char = ' ';
+            istringstream split(line);
+            vector<string> tokens;
+            for (string each;getline(split, each, split_char); tokens.push_back(each));
+
+            for(int i =0; i<tokens.size(); i++){
+            if(current->neighbors.count(tokens[i])<1){
+             current->neighbors.insert(pair<string,MBGoal*>(tokens[i],tokens[i]->second));
+           it->second->neighbors.insert(pair<string,MBGoal*>(name,current));
+                    }
+  }
+
 
        }
        break;
